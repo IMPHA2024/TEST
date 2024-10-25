@@ -1,0 +1,511 @@
+#include <iostream>
+#include <vector>
+#include <stdio.h>
+#include <string>
+using namespace std;
+
+double change_double(vector<char> in)
+{
+	int i = 0, j = 0, num = 0;
+	double out = 0;
+	for (i;i < in.size() && in[i] != '.';i++);
+	j = i + 1;
+	i = i - 1;
+	for (i;i >= 0;i--)
+	{
+		out += pow(10, num) * (in[i] ^ 48);
+		num++;
+	}
+	num = 1;
+	for (j;j < in.size();j++)
+	{
+		out += pow(0.1, num) * (in[j] ^ 48);
+		num++;
+	}
+	return out;
+};
+
+int real_len(string in)
+{
+	int i = 0,j=0;
+	while (in[i] !='\0')
+	{
+		if (in[i] > '9' || in[i] < '0')
+		{
+			if (in[i] != '.' && in[i] != ' ')
+			{
+				j++;
+			}
+		}
+		i++;
+	}
+	i = 0;
+	j = 2 * j + 1;
+	while (in[i] != '\0')
+	{
+		if (in[i]=='[' || in[i] == '{'  || in[i] == '(')
+		{
+			j -= 2;
+		}
+		i++;
+	}
+	return j;
+};
+
+//dispose the raw string
+class new_char
+{
+public:
+	double num = 0;
+	char process = 'a';
+	char fin = 'n';
+};
+
+class new_string
+{
+public:
+	void create(string a, int len)
+	{
+		new_char *s = new new_char[len];
+		int i = 0, j = 0, k = 0;
+		vector<char> temp;
+		while (a[i] != '\0')
+		{
+			j = i;
+			for (j;a[j] != ' ';j++)
+			{
+				temp.push_back(a[j]);
+			}
+			if (j != i + 1)
+			{
+				s[k++].num = change_double(temp);
+			}
+			else
+			{
+				if (temp[0] <= '9' && temp[0] >= '0')
+				{
+					s[k++].num = temp[0] ^ 48;
+				}
+				else
+				{
+					s[k++].process = temp[0];
+					s[k++].fin = 'p';
+				}
+			}
+			i = j + 1;
+		}
+	}
+	new_char* s;
+};
+
+//make stack without data type (using variation)
+class node
+{
+public:
+	double operand=0;
+	char sign='\0';
+	node* next=nullptr;
+};
+
+class stack
+{
+public:
+	virtual void push(double in) = 0;
+	void pop()
+	{
+		node* temp = HEAD->next;
+		delete HEAD;
+		HEAD = temp;
+
+	};
+	double top_operand()
+	{
+		return HEAD->operand;
+	};
+	char top_sign()
+	{
+		return HEAD->sign;
+	}
+	bool isempty()
+	{
+		if (HEAD->next == nullptr) return true;
+		else return false;
+	}
+	int precede(char a) //a<b -1 | a>=b 1
+	{
+		char b = HEAD->operand;
+		int la, lb = 0;
+		char arr[5][2] = { {'+','-'},{'*','/'},{'(',')'},{'[',']'},{'{','}'} };
+		for (int i = 0;i < 3;i++)
+		{
+			for (int j = 0;j < 2;j++)
+			{
+				if (arr[i][j] == a) la = i;
+				if (arr[i][j] == b) lb = i;
+			}
+		}
+		if (la > 2) la = 2;
+		if (lb > 2) lb = 2;
+		switch (la - lb)
+		{
+		case -1:
+		case -2:
+			return -1;
+			break;
+		case 0:
+		case 1:
+		case 2:
+			return 1;
+			break;
+		}
+	}
+	node* HEAD;
+};
+class stack_double :public stack
+{
+public:
+	virtual void push(double in)
+	{
+		node* fresh = new node;
+		fresh->operand = in;
+		if (HEAD == nullptr)
+		{
+			HEAD = fresh;
+			fresh->next = nullptr;
+		}
+		else
+		{
+			node* temp = HEAD;
+			HEAD = fresh;
+			fresh->next = temp;
+		}
+		return;
+	};
+};
+class stack_char :public stack
+{
+public:
+	virtual void push(double in)
+	{
+		node* fresh = new node;
+		fresh->sign = in;
+		if (HEAD == nullptr)
+		{
+			HEAD = fresh;
+			fresh->next = nullptr;
+		}
+		else
+		{
+			node* temp = HEAD;
+			HEAD = fresh;
+			fresh->next = temp;
+		}
+		return;
+	};
+};
+/*class stack
+{
+private:
+	node* HEAD = nullptr;
+public:
+	node* create(){
+		return HEAD;
+	}
+	void push(new_char in){
+		node* fresh = new node;
+		fresh->data = in;
+		if (isempty())
+		{
+			HEAD = fresh;
+			fresh->next=nullptr;
+		}
+		else
+		{
+			node* temp = HEAD;
+			HEAD = fresh;
+			fresh->next = temp;
+		}
+		return;
+	};
+	void pop()
+	{
+		if (isempty())
+		{
+			cout << "stack empty" << endl;
+			return;
+		}
+		else
+		{
+			node* temp = HEAD->next;
+			delete HEAD;
+			HEAD = temp;
+			return;
+		}
+	};
+	char top()
+	{
+		return HEAD->data;
+	};
+	bool isempty()
+	{
+		if (HEAD == nullptr) return true;
+		else return false;
+	}
+	void reverse(node* temp)
+	{
+		if (temp->next == nullptr)
+		{
+			HEAD = temp;
+			return;
+		}
+		else
+		{
+			reverse(temp->next);
+			temp->next->next = temp;
+			temp->next = nullptr;
+		}
+	};
+	void size()
+	{
+		node* temp = HEAD;
+		int i = 0;
+		while (temp != nullptr)
+		{
+			i++;
+			temp = temp->next;
+		}
+		cout << i << endl;
+	};
+	void out()
+	{
+		while (!isempty())
+		{
+			cout << top() <<" ";
+			pop();
+		}
+	};
+	int precede(char a) //a<b -1 | a>b 1
+	{
+		char b = HEAD->data;
+		int la, lb = 0;
+		char arr[5][2] = { {'+','-'},{'*','/'},{'(',')'},{'[',']'},{'{','}'} };
+		for (int i = 0;i < 3;i++)
+		{
+			for (int j = 0;j < 2;j++)
+			{
+				if (arr[i][j] == a) la = i;
+				if (arr[i][j] == b) lb = i;
+			}
+		}
+		if (la > 2) la = 2;
+		if (lb > 2) lb = 2;
+		switch (la - lb)
+		{
+		case 0:
+			return 0;
+			break;
+		case -1:
+		case -2:
+			return -1;
+			break;
+		case 1:
+		case 2:
+			return 1;
+			break;
+		}
+	}
+};*/
+
+/*void change(string s)
+{
+	stack opor;
+	stack opod;
+	int i = 0,flag=0;
+	while(s[i]!='\0')
+	{
+		if (48 <= (int)s[i] <=57)
+		{
+			if (flag == 0)
+			{
+				opod.push(s[i]);
+			}
+			else
+			{
+				char a;
+				int b, c;
+				b = opod.top()^48;
+				opod.pop();
+				c = opod.top()^48;
+				opod.pop();
+				a = opor.top();
+				opor.pop();
+				switch (a)
+				{
+				case'+':
+					opod.push((b + c) ^ 48);
+					break;
+				case'-':
+					opod.push((b - c) ^ 48);
+					break;
+				case'*':
+					opod.push((b * c) ^ 48);
+					break;
+				case'/':
+					opod.push((b / c) ^ 48);
+					break;
+				}
+				flag = 0;
+			}
+		}
+		else
+		{
+			if (!opor.isempty())
+			{
+				opor.push(s[i]);
+			}
+			else
+			{
+				int z = opor.precede(s[i]);
+				opor.push(s[i]);
+				switch (z)
+				{
+				case 0:
+					flag = 1;
+					break;
+				case 1:
+					flag = 1;
+					break;
+				case -1:
+					break;
+				}
+			}
+		}
+		i++;
+	}
+}*/
+
+new_char* make_RPN(string in ,int &len)
+{
+	int i = 0;
+	while (in[i] != '\0')
+	{
+		if (in[i] != ' ')
+		{
+			len++;
+		}
+		else
+		{
+			continue;
+		}
+		i++;
+	}
+	new_string s;
+	int q = 0;
+	new_char* RPN=new new_char[len];
+	s.create(in, len);
+	stack* cha = new stack_char;
+	for (int i = 0;i < len;i++)
+	{
+		if (s.s[i].fin == 'n')
+		{
+			RPN[q++].fin = s.s[i].fin;
+			RPN[q++].num = s.s[i].num;
+		}
+		else if(s.s[i].fin == 'p')
+		{
+			if (s.s[i].process == '(' || s.s[i].process == '[' || s.s[i].process == '{')
+			{
+				cha->push(s.s[i].process);
+			}
+			else if (s.s[i].process == ')' || s.s[i].process == ']' || s.s[i].process == '}')
+			{
+				RPN[q++].process = cha->top_sign();
+				RPN[q++].fin = 'p';
+				cha->pop();
+			}
+			else if (cha->isempty() || cha->precede(s.s[i].process) == -1)
+			{
+				cha->push(s.s[i].process);
+				if (i == len - 1)
+				{
+					while (!cha->isempty())
+					{
+						RPN[q++].process = cha->top_sign();
+						RPN[q++].fin = 'p';
+						cha->pop();
+					}
+				}
+			}
+			else if (cha->precede(s.s[i].process) == 1)
+			{
+				RPN[q++].process = cha->top_sign();
+				RPN[q++].fin = 'p';
+				cha->pop();
+				cha->push(s.s[i].process);
+			}
+		}
+	}
+	return RPN;
+};
+
+double calculate_RPN(new_char* RPN,int len)
+{
+	stack* dou = new stack_double;
+	for (int i = 0;i < len;i++)
+	{
+		if (RPN[i].fin == 'n')
+		{
+			dou->push(RPN[i].num);
+		}
+		else if(RPN[i].fin == 'p')
+		{
+			double a = 0, b = 0;
+			switch (RPN[i].fin)
+			{
+			case '+':
+				a = dou->top_operand();
+				dou->pop();
+				b = dou->top_operand();
+				dou->pop();
+				dou->push(a + b);
+				break;
+			case '-':
+				a = dou->top_operand();
+				dou->pop();
+				b = dou->top_operand();
+				dou->pop();
+				dou->push(a - b);
+				break;
+			case '*':
+				a = dou->top_operand();
+				dou->pop();
+				b = dou->top_operand();
+				dou->pop();
+				dou->push(a * b);
+				break;
+			case '/':
+				a = dou->top_operand();
+				dou->pop();
+				b = dou->top_operand();
+				dou->pop();
+				dou->push(a / b);
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	return dou->top_operand();
+};
+
+int main()
+{
+	string in;
+	double answer = 0;
+	int len = 0;
+	getline(cin, in);
+	make_RPN(in, len);
+	answer=calculate_RPN(make_RPN(in,len),len);
+	cout << answer;
+	return 0;
+}
