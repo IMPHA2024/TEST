@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的个人网站</title>
+    <style>
+        /* 重置样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 导航栏样式 */
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #666;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #007bff;
+        }
+
+        /* 汉堡菜单按钮 */
+        .menu-btn {
+            display: none;
+            cursor: pointer;
+        }
+
+        /* 主要内容区域样式 */
+        .main-content {
+            min-height: 100vh;
+            padding-top: 80px;
+            padding-bottom: 60px;
+        }
+
+        /* 页脚样式 */
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #f8f9fa;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            border-top: 1px solid #eee;
+        }
+
+        .beian a {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .beian a:hover {
+            color: #333;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #ffffff;
+                padding: 1rem;
+                flex-direction: column;
+                text-align: center;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">我的网站</a>
+            
+            <!-- 汉堡菜单按钮 -->
+            <div class="menu-btn">
+                <svg viewBox="0 0 100 80" width="25" height="25">
+                    <rect width="100" height="10"></rect>
+                    <rect y="30" width="100" height="10"></rect>
+                    <rect y="60" width="100" height="10"></rect>
+                </svg>
+            </div>
+
+            <!-- 导航链接 -->
+            <ul class="nav-links">
+                <li><a href="/">首页</a></li>
+                <li><a href="/about">关于</a></li>
+                <li><a href="/blog">博客</a></li>
+                <li><a href="/projects">项目</a></li>
+                <li><a href="/contact">联系我</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <div class="main-content">
+        <!-- 这里放置您的页面主要内容 -->
+    </div>
+
+    <footer class="footer">
+        <div class="beian">
+            <!-- ICP备案 -->
+            <a href="https://beian.miit.gov.cn/" target="_blank">
+                鲁ICP备2024127367号
+            </a>
+        </div>
+    </footer>
+
+    <!-- 添加JavaScript以处理移动端菜单 -->
+    <script>
+        const menuBtn = document.querySelector('.menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
