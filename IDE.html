@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDE</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css"> <!-- 引入CSS文件 -->
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">IDE</a>
+            <div class="menu-btn">
+                <svg viewBox="0 0 100 80" width="25" height="25">
+                    <rect width="100" height="10"></rect>
+                    <rect y="30" width="100" height="10"></rect>
+                    <rect y="60" width="100" height="10"></rect>
+                </svg>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/">MAIN</a></li>
+                <li><a href="/about">ABOUT</a></li>
+                <li><a href="/blog">.H</a></li>
+                <li><a href="/projects">FUNCTION</a></li>
+                <li><a href="/IDE.html">IDE</a></li>
+                </ul>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <div class="main-content">
+        <div class="editor-container">
+            <div class="toolbar">
+                <select id="theme-select">
+                    <option value="dracula">Dracula</option>
+                    <option value="monokai">Monokai</option>
+                    <option value="material">Material</option>
+                    <option value="solarized">Solarized</option>
+                    <option value="nord">Nord</option>
+                </select>
+                <button onclick="insertTemplate()">MODEL</button>
+            </div>
+            <textarea id="cpp-editor"></textarea>
+        </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="beian">
+            <div>
+                SINCE 2024 ©impha.space
+            </div>
+            <a href="https://beian.miit.gov.cn/" target="_blank">
+                鲁ICP备2024127367号
+            </a>
+        </div>
+    </footer>
+
+    <!-- 引入JavaScript文件 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/clike/clike.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/edit/matchbrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/comment/comment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/selection/active-line.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // 初始化编辑器
+        var editor = CodeMirror.fromTextArea(document.getElementById("cpp-editor"), {
+            mode: "text/x-c++src",  // C++ 模式
+            theme: "dracula",
+            lineNumbers: true,       // 显示行号
+            autoCloseBrackets: true, // 自动闭合括号
+            matchBrackets: true,     // 匹配括号
+            styleActiveLine: true,   // 当前行高亮
+            indentUnit: 4,          // 缩进单位
+            tabSize: 4,
+            lineWrapping: true,     // 自动换行
+            foldGutter: true,       // 代码折叠
+            gutters: ["CodeMirror-linenumbers"],
+            extraKeys: {
+                "Ctrl-/": "toggleComment",
+                "Ctrl-Space": "autocomplete",
+                "Tab": function(cm) {
+                    if (cm.somethingSelected()) {
+                        cm.indentSelection("add");
+                    } else {
+                        cm.replaceSelection("    ", "end");
+                    }
+                }
+            }
+        });
+
+        // 主题切换
+        document.getElementById('theme-select').addEventListener('change', function(e) {
+            editor.setOption("theme", e.target.value);
+        });
+
+        // 插入C++模板
+        function insertTemplate() {
+            const template = `#include <iostream>\n#include <vector>\n#include <string>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    // 在这里编写代码\n    return 0;\n}`;
+            editor.setValue(template);
+        }
+
+        // 自动保存到localStorage
+        editor.on('change', function() {
+            localStorage.setItem('cpp-code', editor.getValue());
+        });
+
+        // 加载保存的代码
+        const savedCode = localStorage.getItem('cpp-code');
+        if (savedCode) {
+            editor.setValue(savedCode);
+        }
+    </script>
+</body>
+</html>

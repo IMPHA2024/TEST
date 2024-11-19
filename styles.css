@@ -1,0 +1,152 @@
+/* 重置样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 导航栏样式 */
+.navbar {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1rem 2rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.nav-links a {
+    color: #666;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #007bff;
+}
+
+/* 汉堡菜单按钮 */
+.menu-btn {
+    display: none;
+    cursor: pointer;
+}
+
+/* 主要内容区域样式 */
+.main-content {
+    min-height: 100vh;
+    padding: 80px 20px 60px; /* 为导航栏和页脚留出空间 */
+}
+
+.editor-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.CodeMirror {
+    height: 600px;
+    font-size: 16px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.toolbar {
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+select, button {
+    padding: 5px 10px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    background: #fff;
+}
+
+button:hover {
+    background: #f0f0f0;
+}
+
+/* 页脚样式 */
+.footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #85b5e4;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #ffffff;
+}
+
+.beian {
+    display: flex; /* 使用 Flexbox */
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+}
+
+.beian div {
+    margin-right: 10px; /* 添加右边距以分隔元素 */
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.beian a {
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.beian a:hover {
+    color: #333;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .menu-btn {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        padding: 1rem;
+        flex-direction: column;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+} 
