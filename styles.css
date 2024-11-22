@@ -150,3 +150,37 @@ button:hover {
         display: flex;
     }
 } 
+
+/* FUNCTION.css */
+
+/* 使 zip-files 容器垂直和水平居中 */
+.zip-files {
+    display: flex;
+    flex-direction: column; /* 垂直排列 */
+    align-items: center; /* 水平居中 */
+    justify-content: center; /* 垂直居中 */
+    height: 100%; /* 确保容器占满父元素的高度 */
+}
+
+/* 设计 <a> 标签 */
+.zip-link {
+    display: flex;
+    align-items: center; /* 垂直居中内容 */
+    justify-content: flex-start; /* 左对齐内容 */
+    margin: 10px 0; /* 上下间距 */
+    text-decoration: none; /* 去掉下划线 */
+    color: #333; /* 字体颜色 */
+    transition: color 0.3s; /* 添加过渡效果 */
+    width: 80%; /* 设置链接宽度，确保在父元素中居中 */
+}
+
+.zip-link:hover {
+    color: #007BFF; /* 悬停时改变颜色 */
+}
+
+.zip-logo {
+    width: 50px; /* 设置图标宽度 */
+    height: auto; /* 自适应高度 */
+    margin-right: 10px; /* 图标与文本之间的间距 */
+    align-self: center; /* 确保图标在链接中垂直居中 */
+}
