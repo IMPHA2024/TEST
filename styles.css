@@ -1,186 +1,23 @@
-/* 重置样式 */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* 美化特定按钮 */
+#toggleCodeBtn {
+    background-color: #007BFF; /* 按钮背景颜色 */
+    color: white; /* 字体颜色 */
+    border: none; /* 去掉边框 */
+    border-radius: 4px; /* 圆角 */
+    padding: 10px 20px; /* 内边距 */
+    font-size: 16px; /* 字体大小 */
+    cursor: pointer; /* 鼠标悬停时显示手型光标 */
+    transition: background-color 0.3s, transform 0.2s; /* 添加过渡效果 */
 }
 
-/* 导航栏样式 */
-.navbar {
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    padding: 1rem 2rem;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
+/* 悬停效果 */
+#toggleCodeBtn:hover {
+    background-color: #0056b3; /* 悬停时的背景颜色 */
+    transform: scale(1.05); /* 悬停时稍微放大 */
 }
 
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-    text-decoration: none;
-}
-
-.nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-}
-
-.nav-links a {
-    color: #666;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s ease;
-}
-
-.nav-links a:hover {
-    color: #007bff;
-}
-
-/* 汉堡菜单按钮 */
-.menu-btn {
-    display: none;
-    cursor: pointer;
-}
-
-/* 主要内容区域样式 */
-.main-content {
-    min-height: 100vh;
-    padding: 80px 20px 60px; /* 为导航栏和页脚留出空间 */
-}
-
-.editor-container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.CodeMirror {
-    height: 600px;
-    font-size: 16px;
-    font-family: 'Consolas', 'Monaco', monospace;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.toolbar {
-    margin-bottom: 10px;
-    padding: 10px;
-    background: #fff;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-select, button {
-    padding: 5px 10px;
-    margin-right: 10px;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    background: #fff;
-}
-
-button:hover {
-    background: #f0f0f0;
-}
-
-/* 页脚样式 */
-.footer {
-    text-align: center;
-    padding: 10px 0;
-    background-color: #85b5e4;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    border-top: 1px solid #ffffff;
-}
-
-.beian {
-    display: flex; /* 使用 Flexbox */
-    justify-content: center; /* 水平居中 */
-    align-items: center; /* 垂直居中 */
-}
-
-.beian div {
-    margin-right: 10px; /* 添加右边距以分隔元素 */
-    color: #666;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.beian a {
-    color: #666;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.beian a:hover {
-    color: #333;
-}
-
-/* 响应式设计 */
-@media (max-width: 768px) {
-    .menu-btn {
-        display: block;
-    }
-
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: #ffffff;
-        padding: 1rem;
-        flex-direction: column;
-        text-align: center;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .nav-links.active {
-        display: flex;
-    }
-} 
-
-/* FUNCTION.css */
-
-/* 使 zip-files 容器垂直和水平居中 */
-.zip-files {
-    display: flex;
-    flex-direction: column; /* 垂直排列 */
-    align-items: center; /* 水平居中 */
-    justify-content: center; /* 垂直居中 */
-    height: 100%; /* 确保容器占满父元素的高度 */
-}
-
-/* 设计 <a> 标签 */
-.zip-link {
-    display: flex;
-    align-items: center; /* 垂直居中内容 */
-    justify-content: flex-start; /* 左对齐内容 */
-    margin: 10px 0; /* 上下间距 */
-    text-decoration: none; /* 去掉下划线 */
-    color: #333; /* 字体颜色 */
-    transition: color 0.3s; /* 添加过渡效果 */
-    width: 80%; /* 设置链接宽度，确保在父元素中居中 */
-}
-
-.zip-link:hover {
-    color: #007BFF; /* 悬停时改变颜色 */
-}
-
-.zip-logo {
-    width: 50px; /* 设置图标宽度 */
-    height: auto; /* 自适应高度 */
-    margin-right: 10px; /* 图标与文本之间的间距 */
-    align-self: center; /* 确保图标在链接中垂直居中 */
+/* 按钮禁用状态 */
+#toggleCodeBtn:disabled {
+    background-color: #ccc; /* 禁用时的背景颜色 */
+    cursor: not-allowed; /* 禁用时显示禁止光标 */
 }
