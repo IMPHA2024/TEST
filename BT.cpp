@@ -32,6 +32,7 @@ string lev(const BT_Node* root)
 {
 	string out;
 	queue<const BT_Node*> q;
+	if (root == nullptr) return "#";
 	q.push(root);
 	while (q.empty() != true)
 	{
@@ -66,11 +67,8 @@ void draw_front_rear(int h, int i)
 
 void Draw_BST(const BT_Node* raw, int height)
 {
-	BT_Node* done = Inject_BT(raw, Create_Perfect(height,height));
+	BT_Node* done = Inject_BT(raw, Create_Perfect(height, height));
 	string a = lev(done);
-	/*string data = pre(done);
-	string floor = Floororder(done);
-	string a = Get_Array(data, floor);*/
 	int len = a.length();
 	int h = log(len + 1) / log(2) - 1;
 	int index = 0;
@@ -89,7 +87,7 @@ void Draw_BST(const BT_Node* raw, int height)
 };
 
 //Array
-BT_Node* Create_Perfect(int height,int hi)
+BT_Node* Create_Perfect(int height, int hi)
 {
 	BT_Node* root = nullptr;
 	if (height == 0);
@@ -98,8 +96,8 @@ BT_Node* Create_Perfect(int height,int hi)
 		root = new BT_Node();
 		root->data = '#';
 		root->floor = hi - height + 1;
-		root->left_ptr = Create_Perfect(height - 1,hi);
-		root->right_ptr = Create_Perfect(height - 1,hi);
+		root->left_ptr = Create_Perfect(height - 1, hi);
+		root->right_ptr = Create_Perfect(height - 1, hi);
 	}
 	return root;
 };
@@ -154,11 +152,12 @@ string Get_Array(string& data, string& floor)
 class BT_Tree
 {
 public:
-	void Clear_BT(BT_Node* & root)
+	void Clear_BT(BT_Node*& root)
 	{
 		queue <BT_Node*>q;
+		if (root == nullptr) return;
 		q.push(root);
-		while(q.empty()!=true)
+		while (q.empty() != true)
 		{
 			if (q.front()->left_ptr != nullptr)
 			{
@@ -426,6 +425,7 @@ public:
 	{
 		string out;
 		queue<const BT_Node*> q;
+		if (root == nullptr) return out;
 		q.push(root);
 		while (q.empty() != true)
 		{
@@ -453,7 +453,7 @@ void function(BT_Tree tree)
 	cout << "先序序列为" << tree.Preorder(tree.ROOT) << "  " << "中序序列为"
 		<< tree.Inorder(tree.ROOT) << "  " << "后序序列为"
 		<< tree.Postorder(tree.ROOT) << "  " << "层序序列为"
-		<< tree.Levelorder(tree.ROOT)<<endl;
+		<< tree.Levelorder(tree.ROOT) << endl;
 };
 
 void test_normal()
@@ -517,7 +517,7 @@ void test_insert()
 {
 	char data = '\0';
 	int a = 0, b = 0, c = 0;
-	BT_Tree tree,copy;
+	BT_Tree tree, copy;
 	string BT_Array;
 	cout << "输入二叉树" << endl;
 	cin >> BT_Array;
