@@ -16,18 +16,6 @@ BT_Node* Create_Perfect(int height, int hi);
 string Floororder(const BT_Node* root);
 BT_Node* Inject_BT(const BT_Node* root, BT_Node* re);
 
-string pre(const BT_Node* root)
-{
-	static string out;
-	if (root != nullptr)
-	{
-		out.push_back(root->data);
-		pre(root->left_ptr);
-		pre(root->right_ptr);
-	}
-	return out;
-};
-
 string lev(const BT_Node* root)
 {
 	string out;
@@ -155,7 +143,11 @@ public:
 	void Clear_BT(BT_Node*& root)
 	{
 		queue <BT_Node*>q;
-		if (root == nullptr) return;
+		if (root == nullptr)
+		{
+			cout << "空树!" << endl;
+			return;
+		}
 		q.push(root);
 		while (q.empty() != true)
 		{
